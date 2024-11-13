@@ -1,0 +1,9 @@
+Cython
+docopt
+pid
+PyInstaller
+python-dotenv
+twine
+setuptools
+structlog
+wheel
