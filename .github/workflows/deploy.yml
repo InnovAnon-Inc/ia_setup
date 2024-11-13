@@ -39,11 +39,16 @@ jobs:
 
     # TODO pyinstaller
 
-    - name: Install Twine
-      run: pip install twine
-
+    #- name: Install Twine
+    #  run: pip install twine
+    #
+    #- name: Distribute
+    #  run: twine upload --verbose dist/*
+    #  env:
+    #    TWINE_USERNAME: __token__
+    #    TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
     - name: Distribute
-      run: twine upload --verbose dist/*
+      uses: pypa/gh-action-pypi-publish
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
