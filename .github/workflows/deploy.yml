@@ -24,7 +24,8 @@ jobs:
       with:
         architecture:   x64
         cache:          'pip'
-        python-version: '3.x'
+        #python-version: '3.x'
+        python-version: '3.12'
 
     - name: Bump Version
       id:   tag_version
