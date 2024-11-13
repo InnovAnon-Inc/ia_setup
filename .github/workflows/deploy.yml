@@ -33,10 +33,6 @@ jobs:
     - name: Install Requirements
       run: pip install --upgrade --no-deps -r requirements.txt
 
-    #- run: pip install --upgrade --no-deps .
-    #- run: pip install tox
-    #- run: tox -e py -s dist
-
     - name: Build Wheel
       run: pip wheel -w dist/ .
 
@@ -59,16 +55,14 @@ jobs:
         verbose:      true
 
     - name: Authenticate with Docker Hub
-      run: |
-        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     # TODO parametrize name
     - name: Build Docker Image
-      run: |
-        docker build -t "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" .
+      run: docker build -t "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" .
 
     - name: Tag Docker Image
       run: |
