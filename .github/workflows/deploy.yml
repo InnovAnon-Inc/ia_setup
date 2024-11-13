@@ -42,6 +42,8 @@ jobs:
       run: pip install cibuildwheel
     - name: Build wheels
       run: cibuildwheel --output-dir dist/
+      env:
+        CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
 
     # TODO pyinstaller
 
