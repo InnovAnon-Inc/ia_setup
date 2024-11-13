@@ -33,11 +33,15 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         verbose:      true
 
-    - name: Install Requirements
-      run: pip install --upgrade --no-deps -r requirements.txt
-
-    - name: Build Wheel
-      run: pip wheel -w dist/ .
+    #- name: Install Requirements
+    #  run: pip install --upgrade --no-deps -r requirements.txt
+    #
+    #- name: Build Wheel
+    #  run: pip wheel -w dist/ .
+    - name: Install cibuildwheel
+      run: pip install cibuildwheel
+    - name: Build wheels
+      run: cibuildwheel --output-dir dist/
 
     # TODO pyinstaller
 
@@ -45,7 +49,7 @@ jobs:
       run: pip install twine
     
     - name: Distribute
-      run: twine upload --verbose dist/*
+      run: twine upload --verbose dist/*.whl
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
