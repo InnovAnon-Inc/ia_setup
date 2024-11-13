@@ -20,4 +20,5 @@ jobs:
     # TODO pyinstaller
 
     - run: pip install twine
+    - run: pip wheel -w dist/ .
     - run: twine upload dist/*
