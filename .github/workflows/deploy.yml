@@ -42,20 +42,20 @@ jobs:
 
     # TODO build a wheel and upload it so docker build works. simple problem statement. shouldn't be so fucking difficult
 
-    - name: Install Requirements
-      run: pip install --upgrade --no-deps -r requirements.txt
-    
-    - name: Build Wheel
-      run: pip wheel -w dist/ .
+    #- name: Install Requirements
+    #  run: pip install --upgrade --no-deps -r requirements.txt
+    #
+    #- name: Build Wheel
+    #  run: pip wheel -w dist/ .
 
     # TODO just build whatever fucking version. god damn it.
-    #- name: Install cibuildwheel
-    #  run: pip install cibuildwheel
-    #- name: Build wheels
-    #  run: cibuildwheel --output-dir dist/
-    #  env:
-    #    CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
-    #    CIBW_BUILD:        3.12
+    - name: Install cibuildwheel
+      run: pip install cibuildwheel
+    - name: Build wheels
+      run: cibuildwheel --output-dir dist/
+      env:
+        CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
+        CIBW_BUILD:        cp312
 
     # TODO pyinstaller because holy fuck I just wanna run a fucking helloworld program but that's too much to fucking ask for
 
