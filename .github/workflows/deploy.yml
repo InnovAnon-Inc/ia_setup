@@ -48,10 +48,11 @@ jobs:
     #    TWINE_USERNAME: __token__
     #    TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
     - name: Distribute
-      uses: pypa/gh-action-pypi-publish
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user:     __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
+        verbose:  true
 
     - name: Authenticate with Docker Hub
       run: |
