@@ -40,13 +40,15 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         verbose:      true
 
-    # TODO build a wheel and upload it so docker build works. simple problem statement. impossible task
+    # TODO build a wheel and upload it so docker build works. simple problem statement. shouldn't be so fucking difficult
 
     - name: Install Requirements
       run: pip install --upgrade --no-deps -r requirements.txt
     
     - name: Build Wheel
       run: pip wheel -w dist/ .
+
+    # TODO just build whatever fucking version. god damn it.
     #- name: Install cibuildwheel
     #  run: pip install cibuildwheel
     #- name: Build wheels
@@ -55,7 +57,7 @@ jobs:
     #    CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
     #    CIBW_BUILD:        3.12
 
-    # TODO pyinstaller
+    # TODO pyinstaller because holy fuck I just wanna run a fucking helloworld program but that's too much to fucking ask for
 
     - name: Install Twine
       run: pip install twine
@@ -65,6 +67,7 @@ jobs:
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    # TODO something about the long_description. bullshit
     #- name: Distribute
     #  uses: pypa/gh-action-pypi-publish@release/v1
     #  with:
