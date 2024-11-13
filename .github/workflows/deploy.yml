@@ -11,6 +11,14 @@ jobs:
     - name: Upgrade
       run: sudo apt upgrade -y
 
+    - name: Setup Python Headers
+      run: sudo apt install python3-dev
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: '0'
+
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
@@ -18,17 +26,12 @@ jobs:
         cache:          'pip'
         python-version: '3.x'
 
-    - name: Setup Python Headers
-      run: sudo apt install python3-dev
-
-    - name: Bump version and push tag
+    - name: Bump Version
       id:   tag_version
       uses: mathieudutour/github-tag-action@v6.2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Checkout
-      uses: actions/checkout@v4
+        verbose:      true
 
     - name: Install Requirements
       run: pip install --upgrade --no-deps -r requirements.txt
@@ -60,16 +63,14 @@ jobs:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    # TODO parametrize name
     - name: Build Docker Image
-      run: docker build -t "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" .
+      run: docker build -t "innovanon/${{ github.event.repository.name }}:${{ steps.tag_version.outputs.new_tag }}" .
 
     - name: Tag Docker Image
       run: |
-        docker tag      "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" \
-                         innovanon/ia_setup:latest
+        docker tag      "innovanon/${{ github.event.repository.name }}:${{ steps.tag_version.outputs.new_tag }}" \
+                         innovanon/${{ github.event.repository.name }}:latest
 
     - name: Deploy Docker Image
       run: |
-        docker push      innovanon/ia_setup
-
+        docker push      innovanon/${{ github.event.repository.name }}
