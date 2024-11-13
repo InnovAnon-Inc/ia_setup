@@ -40,18 +40,20 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         verbose:      true
 
-    #- name: Install Requirements
-    #  run: pip install --upgrade --no-deps -r requirements.txt
-    #
-    #- name: Build Wheel
-    #  run: pip wheel -w dist/ .
-    - name: Install cibuildwheel
-      run: pip install cibuildwheel
-    - name: Build wheels
-      run: cibuildwheel --output-dir dist/
-      env:
-        CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
-        CIBW_BUILD:        3.12
+    # TODO build a wheel and upload it so docker build works. simple problem statement. impossible task
+
+    - name: Install Requirements
+      run: pip install --upgrade --no-deps -r requirements.txt
+    
+    - name: Build Wheel
+      run: pip wheel -w dist/ .
+    #- name: Install cibuildwheel
+    #  run: pip install cibuildwheel
+    #- name: Build wheels
+    #  run: cibuildwheel --output-dir dist/
+    #  env:
+    #    CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
+    #    CIBW_BUILD:        3.12
 
     # TODO pyinstaller
 
