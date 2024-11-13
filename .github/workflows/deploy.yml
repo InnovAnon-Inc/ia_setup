@@ -4,21 +4,70 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/checkout@v4
-    - run: sudo apt update
-    - run: sudo apt upgrade -y
+    - name: Bump version and push tag
+      id:   tag_version
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: actions/setup-python@v5
-    - run: sudo apt install python3-dev
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Update
+      run: sudo apt update
+    - name: Upgrade
+      run: sudo apt upgrade -y
 
-    - run: pip install --upgrade --no-deps -r requirements.txt
-    - run: pip install --upgrade --no-deps .
+    - name: Setup Python
+      uses: actions/setup-python@v5
+    - name: Setup Python Headers
+      run: sudo apt install python3-dev
 
+    - name: Install Requirements
+      run: pip install --upgrade --no-deps -r requirements.txt
+
+    #- run: pip install --upgrade --no-deps .
     #- run: pip install tox
     #- run: tox -e py -s dist
 
+    - name: Build Wheel
+      run: pip wheel -w dist/ .
+
     # TODO pyinstaller
 
-    - run: pip install twine
-    - run: pip wheel -w dist/ .
-    - run: twine upload dist/*
+    - name: Install Twine
+      run: pip install twine
+    - name: Configure Twine
+      run: |
+        echo '[pypi]'                       >  ~/.pypirc
+        echo 'username = __token__'         >> ~/.pypirc
+        echo "password = $PYPI_API_TOKEN"   >> ~/.pypirc
+
+        echo '[testpypi]'                   >> ~/.pypirc
+        echo 'username = __token__'         >> ~/.pypirc
+        echo "password = $TESTPYPI_API_KEY" >> ~/.pypirc
+      env:
+        PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Distribute
+      run: twine upload --repository pypi --verbose dist/*
+
+    - name: Authenticate with Docker Hub
+      run: |
+        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    # TODO parametrize name
+    - name: Build Docker Image
+      run: |
+        docker build -t "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" .
+
+    - name: Tag Docker Image
+      run: |
+        docker tag      "innovanon/ia_setup:${{ steps.tag_version.outputs.new_tag }}" \
+                         innovanon/ia_setup:latest
+
+    - name: Deploy Docker Image
+      run: |
+        docker push      innovanon/ia_setup
+
