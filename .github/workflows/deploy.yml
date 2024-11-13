@@ -3,17 +3,22 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v4
+    - run: sudo apt update
+    - run: sudo apt upgrade -y
+
     - uses: actions/setup-python@v5
-    - run: apt update
-    - run: apt upgrade -y
-    - run: apt install python3-dev
+    - run: sudo apt install python3-dev
+
     - run: pip install -r requirements.txt
     - run: pip install .
+    - run: pip install tox
+    - run: tox -e py
+
+    - run: pip wheel -w dist/ .
     # TODO pyinstaller
     # TODO deploy src
     # TODO deploy whl
-    - run: pip install tox
-    - run: tox -e py
     - run: pip install twine
     - run: twine upload dist/
