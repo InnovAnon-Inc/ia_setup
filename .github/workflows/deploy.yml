@@ -41,21 +41,21 @@ jobs:
 
     # TODO pyinstaller
 
-    #- name: Install Twine
-    #  run: pip install twine
-    #
-    #- name: Distribute
-    #  run: twine upload --verbose dist/*
-    #  env:
-    #    TWINE_USERNAME: __token__
-    #    TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Install Twine
+      run: pip install twine
+    
     - name: Distribute
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        attestations: false
-        user:         __token__
-        password:     ${{ secrets.PYPI_API_TOKEN }}
-        verbose:      true
+      run: twine upload --verbose dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+    #- name: Distribute
+    #  uses: pypa/gh-action-pypi-publish@release/v1
+    #  with:
+    #    attestations: false
+    #    user:         __token__
+    #    password:     ${{ secrets.PYPI_API_TOKEN }}
+    #    verbose:      true
 
     - name: Authenticate with Docker Hub
       run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
