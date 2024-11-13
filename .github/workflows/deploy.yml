@@ -34,6 +34,10 @@ jobs:
 
     # TODO pyinstaller
 
+    - name: Sanity Check #1
+      run: test -n "$PYPI_API_TOKEN"
+      env:
+        PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
     - name: Install Twine
       run: pip install twine
     - name: Configure Twine
@@ -41,15 +45,18 @@ jobs:
         echo '[pypi]'                       >  ~/.pypirc
         echo 'username = __token__'         >> ~/.pypirc
         echo "password = $PYPI_API_TOKEN"   >> ~/.pypirc
-
-        echo '[testpypi]'                   >> ~/.pypirc
-        echo 'username = __token__'         >> ~/.pypirc
-        echo "password = $TESTPYPI_API_KEY" >> ~/.pypirc
       env:
         PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
     - name: Distribute
       run: twine upload --repository pypi --verbose dist/*
 
+    - name: Sanity Check #2
+      run: |
+          test -n "$DOCKERHUB_USERNAME"
+          test -n "$DOCKERHUB_PASSWORD"
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
     - name: Authenticate with Docker Hub
       run: |
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
