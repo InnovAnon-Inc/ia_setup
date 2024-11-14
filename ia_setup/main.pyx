@@ -6,7 +6,6 @@
 
 from pathlib           import Path
 import os
-import sys
 from   typing          import Dict, Optional
 
 #import docopt
