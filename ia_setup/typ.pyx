@@ -1,7 +1,14 @@
+import sys
 from typing import Callable
-from typing import ParamSpec
-from typing import TypeAlias
-from typing import TypeVar
+
+if sys.version_info < (3, 10):
+	from typing_extensions import ParamSpec
+	from typing_extensions import TypeAlias
+	from typing_extensions import TypeVar
+else:
+	from typing import ParamSpec
+	from typing import TypeAlias
+	from typing import TypeVar
 
 T:TypeVar   = TypeVar('T')
 P:ParamSpec = ParamSpec('P')
