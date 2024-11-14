@@ -48,6 +48,12 @@ jobs:
     - name: Build Wheel
       run: pip wheel -w dist/ .
 
+    - name: Install AuditWheel
+      run:  pip install auditwheel
+
+    - name: Fix Wheel
+      run:  auditwheel repair dist/*.whl
+
     # TODO just build whatever fucking version. god damn it.
     #- name: Install cibuildwheel
     #  run: pip install cibuildwheel
