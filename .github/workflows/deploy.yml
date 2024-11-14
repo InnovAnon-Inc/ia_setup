@@ -2,40 +2,41 @@ on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # TODO how the fuck does this not have pip? or python for that matter? fucking garbage.
     #container: quay.io/pypa/manylinux2014_x86_64
-    container: quay.io/pypa/manylinux_2_28_x86_64
+    #container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
 
-    #- name: Update
-    #  #run:  sudo apt update
-    #  run:  apk update
-    #
-    #- name: APT Cache
-    #  uses: awalsh128/cache-apt-pkgs-action@latest
-    #  with:
-    #    packages: >
-    #      python3-dev
-    #
-    #- name: Upgrade
-    #  #run:  sudo apt upgrade -y
-    #  run:  apk upgrade
-    #
-    #- name: Setup Python Headers
-    #  #run:  sudo apt install python3-dev
-    #  run:  apk install python3-dev
+    - name: Update
+      run:  sudo apt update
+      #run:  apk update
+    
+    - name: APT Cache
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: >
+          python3-dev
+    
+    - name: Upgrade
+      run:  sudo apt upgrade -y
+      #run:  apk upgrade
+    
+    - name: Setup Python Headers
+      run:  sudo apt install python3-dev
+      #run:  apk install python3-dev
 
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: '0'
 
-    #- name: Setup Python
-    #  uses: actions/setup-python@v5
-    #  with:
-    #    architecture:   x64
-    #    cache:          'pip'
-    #    python-version: '3.x'
-    #    #python-version: '3.12'
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        architecture:   x64
+        cache:          'pip'
+        python-version: '3.x'
+        #python-version: '3.12'
 
     - name: Bump Version
       id:   tag_version
@@ -47,21 +48,21 @@ jobs:
     # TODO build a wheel and upload it so docker build works. simple problem statement. shouldn't be so fucking difficult
 
     - name: Install Requirements
-      #run: pip install --upgrade --no-deps -r requirements.txt
-      run: python -m pip install --upgrade --no-deps -r requirements.txt
+      run: pip install --upgrade --no-deps -r requirements.txt
+      #run: python -m pip install --upgrade --no-deps -r requirements.txt
     
     - name: Build Wheel
-      #run: pip wheel -w dist/ .
-      run: python -m pip wheel -w dist/ .
+      run: pip wheel -w dist/ .
+      #run: python -m pip wheel -w dist/ .
 
     # TODO ABI version. what a piece of shit
     - name: Install AuditWheel
-      #run:  pip install auditwheel
-      run:  python -m pip install auditwheel
+      run:  pip install auditwheel
+      #run:  python -m pip install auditwheel
     
     - name: Fix Wheel
-      #run:  auditwheel repair -w dist/ dist/*.whl
-      run:  python -m auditwheel repair -w dist/ dist/*.whl
+      run:  auditwheel repair -w dist/ dist/*.whl
+      #run:  python -m auditwheel repair -w dist/ dist/*.whl
 
     # TODO just build whatever fucking version. god damn it.
     #- name: Install cibuildwheel
@@ -75,8 +76,8 @@ jobs:
     # TODO pyinstaller because holy fuck I just wanna run a fucking helloworld program but that's too much to fucking ask for
 
     - name: Install Twine
-      #run: pip install twine
-      run: python -m pip install twine
+      run: pip install twine
+      #run: python -m pip install twine
     
     - name: Distribute
       #run: twine upload --verbose dist/*.whl
