@@ -55,6 +55,11 @@ jobs:
       run: pip wheel -w dist/ .
       #run: python -m pip wheel -w dist/ .
 
+    - name: Install Tox
+      run:  pip install tox
+    - name: Run Tox
+      run:  tox
+
     # TODO ABI version. what a piece of shit
     - name: Install AuditWheel
       run:  pip install auditwheel
