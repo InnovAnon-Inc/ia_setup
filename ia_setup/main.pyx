@@ -8,7 +8,7 @@ from pathlib           import Path
 import os
 import sys
 from   typing          import Dict, Optional
-if sys.version < (3, 10):
+if sys.version_info < (3, 10):
 	from   typing_extensions import  TypeAlias
 else:
 	from   typing            import  TypeAlias
