@@ -1,9 +1,7 @@
 Cython
 PyInstaller
 python-dotenv
+#rich
 setuptools
 structlog
-#rich
-tox
-twine
 wheel

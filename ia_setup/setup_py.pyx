@@ -30,7 +30,7 @@ def setup(*args:P.args, clobber:bool=False, **kwargs:P.kwargs,)->None:
 
 	if('exclude_package_data' not in kwargs):
 		_kwargs['exclude_package_data']          = {
-            		'': ['*.cpp', '*.pyx', 'hook-*.py', 'main-*.py', '__pycache__',] # '*.py',
+            		'': ['*.cpp', '*.pyx', 'hook-*.py', 'main-*.py', '__pycache__', '.env',] # '*.py',
         	}
 	_setup(
 		*args,

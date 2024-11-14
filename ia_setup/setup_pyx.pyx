@@ -46,12 +46,12 @@ def setup(*args:P.args, clobber:bool=False, **kwargs:P.kwargs,)->None:
 
 	if('package_data'         not in kwargs):
 		_kwargs['package_data']         = {
-            		'': ['*.so', ],
+            		'': ['*.so',],
         	}
 
 	if('exclude_package_data' not in kwargs):
 		_kwargs['exclude_package_data'] = {
-			'': ['*.cpp', '*.pyx', '*.py', 'hook-*.py', 'main-*.py', '__pycache__',]
+			'': ['*.cpp', '*.pyx', '*.py', 'hook-*.py', 'main-*.py', '__pycache__', '.env',]
 		}
 
 	if('zip_safe'             not in kwargs): # PyInstaller
