@@ -55,10 +55,12 @@ jobs:
       run: pip wheel -w dist/ .
       #run: python -m pip wheel -w dist/ .
 
-    - name: Install Tox
-      run:  pip install tox
-    - name: Run Tox
-      run:  tox
+    # TODO well, I've installed the fuck outta cython, so if you can't find it, then here be more shitty software
+    #- name: Install Tox
+    #  run:  pip install tox
+    #
+    #- name: Run Tox
+    #  run:  tox
 
     # TODO ABI version. what a piece of shit
     - name: Install AuditWheel
