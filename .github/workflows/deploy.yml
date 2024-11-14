@@ -55,7 +55,7 @@ jobs:
       run: cibuildwheel --output-dir dist/
       env:
         CIBW_BEFORE_BUILD: pip install Cython setuptools wheel
-        CIBW_BUILD:        cp312
+        #CIBW_BUILD:        cp312
 
     # TODO pyinstaller because holy fuck I just wanna run a fucking helloworld program but that's too much to fucking ask for
 
