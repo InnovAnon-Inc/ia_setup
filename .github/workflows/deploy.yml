@@ -6,23 +6,23 @@ jobs:
     container: quay.io/pypa/manylinux_2_28_x86_64
     steps:
 
-    - name: Update
-      #run:  sudo apt update
-      run:  apk update
-
-    - name: APT Cache
-      uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: >
-          python3-dev
-
-    - name: Upgrade
-      #run:  sudo apt upgrade -y
-      run:  apk upgrade
-
-    - name: Setup Python Headers
-      #run:  sudo apt install python3-dev
-      run:  apk install python3-dev
+    #- name: Update
+    #  #run:  sudo apt update
+    #  run:  apk update
+    #
+    #- name: APT Cache
+    #  uses: awalsh128/cache-apt-pkgs-action@latest
+    #  with:
+    #    packages: >
+    #      python3-dev
+    #
+    #- name: Upgrade
+    #  #run:  sudo apt upgrade -y
+    #  run:  apk upgrade
+    #
+    #- name: Setup Python Headers
+    #  #run:  sudo apt install python3-dev
+    #  run:  apk install python3-dev
 
     - name: Checkout
       uses: actions/checkout@v4
