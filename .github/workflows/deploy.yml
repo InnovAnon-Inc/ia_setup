@@ -54,6 +54,12 @@ jobs:
     - name: Fix Wheel
       run:  auditwheel repair dist/*.whl
 
+    - name: Clear Cruft
+      run:  rm -v dist/*
+
+    - name: Replace Cruft
+      run:  mv -nv wheelhouse/* dist/
+
     # TODO just build whatever fucking version. god damn it.
     #- name: Install cibuildwheel
     #  run: pip install cibuildwheel
