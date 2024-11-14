@@ -47,17 +47,21 @@ jobs:
     # TODO build a wheel and upload it so docker build works. simple problem statement. shouldn't be so fucking difficult
 
     - name: Install Requirements
-      run: pip install --upgrade --no-deps -r requirements.txt
+      #run: pip install --upgrade --no-deps -r requirements.txt
+      run: python -m pip install --upgrade --no-deps -r requirements.txt
     
     - name: Build Wheel
-      run: pip wheel -w dist/ .
+      #run: pip wheel -w dist/ .
+      run: python -m pip wheel -w dist/ .
 
     # TODO ABI version. what a piece of shit
     - name: Install AuditWheel
-      run:  pip install auditwheel
+      #run:  pip install auditwheel
+      run:  python -m pip install auditwheel
     
     - name: Fix Wheel
-      run:  auditwheel repair -w dist/ dist/*.whl
+      #run:  auditwheel repair -w dist/ dist/*.whl
+      run:  python -m auditwheel repair -w dist/ dist/*.whl
 
     # TODO just build whatever fucking version. god damn it.
     #- name: Install cibuildwheel
@@ -71,10 +75,12 @@ jobs:
     # TODO pyinstaller because holy fuck I just wanna run a fucking helloworld program but that's too much to fucking ask for
 
     - name: Install Twine
-      run: pip install twine
+      #run: pip install twine
+      run: python -m pip install twine
     
     - name: Distribute
-      run: twine upload --verbose dist/*.whl
+      #run: twine upload --verbose dist/*.whl
+      run: python -m twine upload --verbose dist/*.whl
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
