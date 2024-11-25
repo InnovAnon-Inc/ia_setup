@@ -3,7 +3,8 @@ services:
     hostname:         ia_setup.innovanon.com
     build:
       context:        .
-      tags:           ia_setup:latest
+      tags:
+        - ia_setup:latest
     restart:          no
     logging:
       driver:         syslog   
