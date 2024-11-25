@@ -1,8 +1,7 @@
 services:
   ia_setup:
     hostname:         ia_setup.innovanon.com
-    build:
-      context:        ia_setup
+    build:            .
     image:            ia_setup:latest
     restart:          no
     logging:
