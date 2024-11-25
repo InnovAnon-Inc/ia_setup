@@ -4,7 +4,6 @@ services:
     build:
       context:        .
       tags:           ia_setup:latest
-    #image:            ia_setup:latest
     restart:          no
     logging:
       driver:         syslog   
