@@ -1,0 +1,14 @@
+  syslog:
+    hostname:         syslog.innovanon.com
+    build:
+      context:        syslog
+    ports:            # TODO SSL ?
+      - 0.0.0.0:514:514
+      - 0.0.0.0:514:514/UDP
+    #privileged:      true # kernel
+    restart:          unless-stopped
+    logging:
+      driver:         syslog   
+    #depends_on:
+    #  sl:
+    #    restart:      true
