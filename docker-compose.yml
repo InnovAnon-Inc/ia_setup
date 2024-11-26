@@ -8,6 +8,7 @@ services:
         -           ia_setup:latest
         - innovanon/ia_setup
         -           ia_setup
+    image:            innovanon/ia_setup
     restart:          no
     logging:
       driver:         syslog   
