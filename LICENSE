@@ -1,2 +1,4 @@
 The source for anything that has been pushed to PyPi is free to use, modify, etc.
 EVERYTHING else is fucking COPYRIGHTED
+
+PRs to fix the .github/ directory are welcome, and the individual or org that does the PR may use this code without restriction.
